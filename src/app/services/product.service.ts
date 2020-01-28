@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Products } from '../core/interfaces/products';
+import { PaginationResponse } from '../core/types/requests/pagination-response';
+import { Product } from '../core/types/models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ProductService {
   ) { }
 
   getProducts() {
-    return this.http.get<Products>(this.apiUrl);
+    return this.http.get<PaginationResponse<Product>>(this.apiUrl);
   }
 
 }

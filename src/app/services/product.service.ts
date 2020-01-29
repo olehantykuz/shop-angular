@@ -5,13 +5,14 @@ import { Observable, of } from 'rxjs';
 
 import { PaginationResponse } from '../core/types/requests/pagination-response';
 import { Product } from '../core/types/models/product';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   products = [];
-  apiUrl = 'http://shop-local.com/api/products';
+  apiUrl =  environment.baseUrl + '/products';
 
   constructor(
     private http: HttpClient

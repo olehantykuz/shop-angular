@@ -8,13 +8,10 @@
       <th>Price, usd</th>
       <th>Action</th>
     </tr>
-    <tr
+    <tr app-product-list-item
       *ngFor="let product of products;"
+      [product]="product"
     >
-      <td>{{ product.id }}</td>
-      <td>{{ product.category.name }}</td>
-      <td>{{ product.name }}</td>
-      <td>{{ product.price }}</td>
     </tr>
   </table>
 </div>

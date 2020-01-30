@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Product } from '../../core/types/models/product';
+import { CurrencyService } from '../../services/currency.service';
 
 @Component({
   selector: '[app-product-list-item]',
@@ -9,9 +10,16 @@ import { Product } from '../../core/types/models/product';
 export class ProductListItemComponent implements OnInit {
   @Input() product: Product;
 
-  constructor() { }
+  constructor(
+    private currencyService: CurrencyService
+  ) { }
 
   ngOnInit() {
+  }
+
+  getFormattedPrice() {
+    return (this.currencyService.getConvertedValue(this.product.price))
+      .toFixed(2);
   }
 
 }

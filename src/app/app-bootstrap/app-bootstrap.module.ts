@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, PaginationModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    PaginationModule.forRoot()
   ],
-  exports: [BsDropdownModule]
+  exports: [BsDropdownModule, PaginationModule]
 })
 export class AppBootstrapModule { }

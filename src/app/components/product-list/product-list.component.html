@@ -1,5 +1,10 @@
 <div>
   <h3>List of Products</h3>
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="" (click)="getProducts($event, paginationLinks.prev)">Previous</a></li>
+    <li style="display: flex;" class="page-item flex align-items-center"><div>Page {{paginationMeta.current_page}} of {{paginationMeta.last_page}}</div></li>
+    <li class="page-item"><a class="page-link" href="" (click)="getProducts($event, paginationLinks.next)">Next</a></li>
+  </ul>
   <table class="table">
     <tr>
       <th>ID</th>

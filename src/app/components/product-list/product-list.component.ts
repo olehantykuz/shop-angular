@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService} from '../../services/product.service';
+import { CurrencyService } from '../../services/currency.service';
 
 @Component({
   selector: 'app-product-list',
@@ -10,7 +11,8 @@ export class ProductListComponent implements OnInit {
   products = [];
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private currencyService: CurrencyService
   ) { }
 
   ngOnInit() {
@@ -18,6 +20,10 @@ export class ProductListComponent implements OnInit {
       .subscribe(response => {
         this.products = response.data;
       });
+  }
+
+  selectedCurrencyName() {
+    return this.currencyService.selectedCurrency;
   }
 
 }

@@ -13,6 +13,7 @@ import { HeadingComponent } from './components/heading/heading.component';
 import { CurrencyListComponent } from './components/currency-list/currency-list.component';
 import { CurrencyListItemComponent } from './components/currency-list-item/currency-list-item.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LoginComponent } from './components/login/login.component';
     HeadingComponent,
     CurrencyListComponent,
     CurrencyListItemComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

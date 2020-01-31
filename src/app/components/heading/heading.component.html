@@ -4,8 +4,11 @@
       <li class="list-group-item">
         <a routerLink="/">Products</a>
       </li>
-      <li class="list-group-item">
+      <li *ngIf="!userService.isLoggedIn()" class="list-group-item">
         <a routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="userService.isLoggedIn()" class="list-group-item" v-if="status.loggedIn">
+        <a href="" (click)="logout($event)">Logout</a>
       </li>
     </ul>
     <div class="d-flex align-items-center list-group list-group-horizontal">

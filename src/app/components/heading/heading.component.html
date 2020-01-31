@@ -5,6 +5,9 @@
         <a routerLink="/">Products</a>
       </li>
       <li *ngIf="!userService.isLoggedIn()" class="list-group-item">
+        <a routerLink="/register">Register</a>
+      </li>
+      <li *ngIf="!userService.isLoggedIn()" class="list-group-item">
         <a routerLink="/login">Login</a>
       </li>
       <li *ngIf="userService.isLoggedIn()" class="list-group-item" v-if="status.loggedIn">

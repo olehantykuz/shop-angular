@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { LoginData, User } from '../core/types/models/user';
+import {LoginData, RegisterData, User} from '../core/types/models/user';
 import { AuthResponse } from '../core/types/requests/auth-response';
 import { environment } from '../../environments/environment';
 
@@ -45,7 +45,17 @@ export class UserService {
     return this.http.post<AuthResponse>(url, data, this.httpOptions).pipe(
       tap(response => {
         this.authorise(response);
-        this.user = response.user;
+      }),
+      catchError(this.handleError<AuthResponse>())
+    );
+  }
+
+  register(data: RegisterData) {
+    const url = this.baseAuthUrl + '/register';
+
+    return this.http.post<AuthResponse>(url, data, this.httpOptions).pipe(
+      tap(response => {
+        this.authorise(response);
       }),
       catchError(this.handleError<AuthResponse>())
     );
@@ -81,6 +91,7 @@ export class UserService {
 
   private authorise(response) {
     this.token = response.access_token;
+    this.user = response.user;
     window.localStorage.setItem('authToken', JSON.stringify(this.token));
   }
 

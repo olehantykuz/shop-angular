@@ -27,6 +27,18 @@ export class UserService {
     return Boolean(this.token);
   }
 
+  authHeader() {
+    const header = this.token ? { Authorization: 'Bearer ' + JSON.parse(window.localStorage.getItem('authToken')) } : {};
+
+    return {
+      headers: new HttpHeaders(header)
+    };
+  }
+
+  getAccount() {
+    return this.user;
+  }
+
   login(data: LoginData) {
     const url = this.baseAuthUrl + '/login';
 
@@ -37,6 +49,17 @@ export class UserService {
       }),
       catchError(this.handleError<AuthResponse>())
     );
+  }
+
+  getUser() {
+    const url = this.baseAuthUrl + '/me';
+
+    return this.http.get<User>(url, this.authHeader()).pipe(
+      tap(response => {
+        this.user = response;
+      }),
+      catchError(this.handleError<User>())
+    ).subscribe();
   }
 
   private handleError<T>(result?: T) {

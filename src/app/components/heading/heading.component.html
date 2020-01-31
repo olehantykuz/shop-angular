@@ -1,6 +1,23 @@
 <header class="mb-4">
   <div class="d-flex flex-row justify-content-between">
-    <div class="d-flex list-group list-group-horizontal">
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item">
+        <a routerLink="/">Products</a>
+      </li>
+      <li *ngIf="!userService.isLoggedIn()" class="list-group-item">
+        <a routerLink="/register">Register</a>
+      </li>
+      <li *ngIf="!userService.isLoggedIn()" class="list-group-item">
+        <a routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="userService.isLoggedIn()" class="list-group-item" v-if="status.loggedIn">
+        <a href="" (click)="logout($event)">Logout</a>
+      </li>
+    </ul>
+    <div class="d-flex align-items-center list-group list-group-horizontal">
+      <div *ngIf="account()" class="d-flex align-items-center justify-content-center list-group-item ml-1">
+        <span>{{ user.email }}</span>
+      </div>
       <app-currency-list class="ml-2"></app-currency-list>
     </div>
   </div>

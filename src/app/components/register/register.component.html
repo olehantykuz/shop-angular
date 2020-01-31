@@ -1,0 +1,51 @@
+<h2>Register</h2>
+<form [formGroup]="registerForm" (ngSubmit)="register($event)">
+  <div class="form-group">
+    <label for="register-name">Name</label>
+    <input
+      id="register-name"
+      type="text"
+      name="name"
+      class="form-control"
+      formControlName="name"
+      [ngClass]="{ 'is-invalid': submitted && form.name.errors }"
+    />
+    <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+      <div *ngIf="form.email.errors.required">Name is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      id="email"
+      class="form-control"
+      type="email"
+      name="email"
+      formControlName="email"
+      [ngClass]="{ 'is-invalid': submitted && form.email.errors }"
+    />
+    <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+      <div *ngIf="form.email.errors.required">Email is required</div>
+      <div *ngIf="form.email.errors.email">Email must be a valid email address</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      name="password"
+      class="form-control"
+      formControlName="password"
+      [ngClass]="{ 'is-invalid': submitted && form.password.errors }"
+    />
+    <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+      <div *ngIf="form.password.errors.required">Password is required</div>
+      <div *ngIf="form.password.errors.minlength">Password must be at least 8 characters</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Register</button>
+    <a routerLink="/login" class="btn btn-link">Login</a>
+  </div>
+</form>

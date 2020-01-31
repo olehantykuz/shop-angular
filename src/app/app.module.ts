@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppBootstrapModule } from './app-bootstrap/app-bootstrap.module';
@@ -12,6 +12,7 @@ import { ProductListItemComponent } from './components/product-list-item/product
 import { HeadingComponent } from './components/heading/heading.component';
 import { CurrencyListComponent } from './components/currency-list/currency-list.component';
 import { CurrencyListItemComponent } from './components/currency-list-item/currency-list-item.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CurrencyListItemComponent } from './components/currency-list-item/curre
     ProductListItemComponent,
     HeadingComponent,
     CurrencyListComponent,
-    CurrencyListItemComponent
+    CurrencyListItemComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { CurrencyListItemComponent } from './components/currency-list-item/curre
     AppRoutingModule,
     BrowserAnimationsModule,
     AppBootstrapModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

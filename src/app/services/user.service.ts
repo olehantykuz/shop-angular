@@ -51,6 +51,15 @@ export class UserService {
     );
   }
 
+  logout() {
+    const url = this.baseAuthUrl + '/logout';
+    const headers = this.authHeader();
+    window.localStorage.removeItem('authToken');
+    this.user = this.token = null;
+
+    return this.http.post(url, null, headers);
+  }
+
   getUser() {
     const url = this.baseAuthUrl + '/me';
 
@@ -71,7 +80,8 @@ export class UserService {
   }
 
   private authorise(response) {
-    window.localStorage.setItem('authToken', JSON.stringify(response.access_token));
+    this.token = response.access_token;
+    window.localStorage.setItem('authToken', JSON.stringify(this.token));
   }
 
 }

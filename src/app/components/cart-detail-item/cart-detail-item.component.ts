@@ -25,7 +25,7 @@ export class CartDetailItemComponent implements OnInit {
     return this.currencyService.getFormattedPrice(this.product.item.price);
   }
 
-  productTotalPrice() {
+  get productTotalPrice() {
     return (+this.formattedPrice() * this.product.quantity).toFixed(2);
   }
 

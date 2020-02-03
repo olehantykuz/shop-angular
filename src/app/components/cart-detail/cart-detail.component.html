@@ -5,15 +5,15 @@
     <tr>
       <th>#</th>
       <th>Product Name</th>
-      <th>Price, {{ selectedCurrencyName() }}</th>
+      <th>Price, {{ selectedCurrencyName }}</th>
       <th>Quantity</th>
-      <th>Total price, {{ selectedCurrencyName() }}</th>
+      <th>Total price, {{ selectedCurrencyName }}</th>
       <th>Remove</th>
     </tr>
     </thead>
     <tbody>
       <tr app-cart-detail-item
-        *ngFor="let item of getItems(); index as index;"
+        *ngFor="let item of items; index as index;"
         [product]="item"
         [index]="index"
       ></tr>
@@ -21,8 +21,8 @@
     <tfoot *ngIf="items.length > 0">
       <tr>
         <td colspan="4"></td>
-        <td class="table-info">Total, {{ selectedCurrencyName() }} </td>
-        <td class="table-info">{{ getTotalCost() }}</td>
+        <td class="table-info">Total, {{ selectedCurrencyName }} </td>
+        <td class="table-info">{{ totalCost }}</td>
       </tr>
     </tfoot>
   </table>

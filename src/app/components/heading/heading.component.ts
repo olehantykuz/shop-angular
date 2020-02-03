@@ -31,7 +31,7 @@ export class HeadingComponent implements OnInit {
     });
   }
 
-  getTotalCartItemsNumber() {
+  get getTotalCartItemsNumber() {
     return this.cartService.items.length;
   }
 

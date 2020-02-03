@@ -11,11 +11,21 @@ export class CartService {
 
   constructor() { }
 
-  addItem(item: Product, quantity: number) {
-    this.items.push({
-      item,
-      quantity
+  addItem(product: Product, quantity: number) {
+    const id = product.id;
+
+    const cartItem = this.items.find(element => {
+      return element.item.id === id;
     });
+
+    if (cartItem) {
+      cartItem.quantity += quantity;
+    } else {
+      this.items.push({
+        item: product,
+        quantity
+      });
+    }
   }
 
 }

@@ -4,6 +4,9 @@
       <li class="list-group-item">
         <a routerLink="/">Products</a>
       </li>
+      <li class="list-group-item">
+        <a routerLink="/cart">Cart</a>
+      </li>
       <li *ngIf="!userService.isLoggedIn()" class="list-group-item">
         <a routerLink="/register">Register</a>
       </li>
@@ -18,7 +21,9 @@
       <div class="d-flex flex-row list-group-item rounded">
         <div>
           Cart:
+          <a routerLink="/cart">
             {{getTotalCartItemsNumber()}} products in cart
+          </a>
         </div>
       </div>
       <div *ngIf="account()" class="d-flex align-items-center justify-content-center list-group-item ml-1">

@@ -1,0 +1,19 @@
+<td>{{ index + 1}}</td>
+<td>{{ product.item.name }}</td>
+<td>{{ formattedPrice() }}</td>
+<td>{{ product.quantity }}</td>
+<td>{{ productTotalPrice() }}</td>
+<td>
+  <input
+    class="count-input"
+    type="number"
+    min="1"
+    [max]="product.quantity"
+    [(ngModel)]="removedQuantity"
+  />
+  <button
+    (click)="removeProduct()"
+  >
+    Reduce
+  </button>
+</td>

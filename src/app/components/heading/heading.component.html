@@ -15,6 +15,12 @@
       </li>
     </ul>
     <div class="d-flex align-items-center list-group list-group-horizontal">
+      <div class="d-flex flex-row list-group-item rounded">
+        <div>
+          Cart:
+            {{getTotalCartItemsNumber()}} products in cart
+        </div>
+      </div>
       <div *ngIf="account()" class="d-flex align-items-center justify-content-center list-group-item ml-1">
         <span>{{ user.email }}</span>
       </div>

@@ -30,7 +30,7 @@ export class CartDetailComponent implements OnInit {
   getTotalCost() {
     const totalCostInBaseCurrency = this.cartService.calculateTotalCost();
 
-    return (this.currencyService.getConvertedValue(totalCostInBaseCurrency) / 100).toFixed(2);
+    return this.currencyService.getFormattedPrice(totalCostInBaseCurrency);
   }
 
 }

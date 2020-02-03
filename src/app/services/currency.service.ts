@@ -44,6 +44,10 @@ export class CurrencyService {
     return value * this.getConversionRate();
   }
 
+  getFormattedPrice(basePrice: number) {
+    return (this.getConvertedValue(basePrice) / 100).toFixed(2);
+  }
+
   private handleError<T>(result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

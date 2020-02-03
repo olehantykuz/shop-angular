@@ -21,8 +21,7 @@ export class ProductListItemComponent implements OnInit {
   }
 
   getFormattedPrice() {
-    return (this.currencyService.getConvertedValue(this.product.price))
-      .toFixed(2);
+    return this.currencyService.getFormattedPrice(this.product.price);
   }
 
   addToCart() {

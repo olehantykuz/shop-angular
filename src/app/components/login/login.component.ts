@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const data = JSON.stringify(this.loginForm.value) as LoginData;
+    const data = this.loginForm.value as LoginData;
     this.userService.login(data)
       .subscribe(response => {
         if (response) {

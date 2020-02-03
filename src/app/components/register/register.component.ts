@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const data = JSON.stringify(this.registerForm.value) as RegisterData;
+    const data = this.registerForm.value as RegisterData;
     this.userService.register(data)
       .subscribe(response => {
         if (response) {

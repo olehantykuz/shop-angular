@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 
+import { serverErrorHandle } from '../core/helpers/error-hadle';
 import {LoginData, RegisterData, User} from '../core/types/models/user';
 import { AuthResponse } from '../core/types/requests/auth-response';
 import { environment } from '../../environments/environment';
@@ -46,7 +46,7 @@ export class UserService {
       tap(response => {
         this.authorise(response);
       }),
-      catchError(this.handleError<AuthResponse>())
+      catchError(serverErrorHandle<AuthResponse>())
     );
   }
 
@@ -57,7 +57,7 @@ export class UserService {
       tap(response => {
         this.authorise(response);
       }),
-      catchError(this.handleError<AuthResponse>())
+      catchError(serverErrorHandle<AuthResponse>())
     );
   }
 
@@ -77,16 +77,8 @@ export class UserService {
       tap(response => {
         this.user = response;
       }),
-      catchError(this.handleError<User>())
+      catchError(serverErrorHandle<User>())
     ).subscribe();
-  }
-
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-      console.error('error', error);
-
-      return of(result as T);
-    };
   }
 
   private authorise(response) {

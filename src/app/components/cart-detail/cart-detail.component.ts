@@ -32,4 +32,8 @@ export class CartDetailComponent implements OnInit {
     return this.currencyService.getFormattedPrice(totalCostInBaseCurrency);
   }
 
+  clear() {
+    this.cartService.clearCart();
+  }
+
 }

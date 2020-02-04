@@ -26,4 +26,13 @@
       </tr>
     </tfoot>
   </table>
+  <div class="row d-flex justify-content-around" *ngIf="items.length > 0">
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="clear()"
+    >
+      Clear Cart
+    </button>
+  </div>
 </div>

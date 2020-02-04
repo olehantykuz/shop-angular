@@ -15,6 +15,9 @@ export class CartDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.cartService.items.length === 0) {
+      this.cartService.fetchCartItems().subscribe();
+    }
   }
 
   get selectedCurrencyName() {

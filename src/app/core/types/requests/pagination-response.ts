@@ -20,3 +20,7 @@ export interface PaginationResponse<T> {
   links?: IPaginationLinks;
   meta?: IPaginationMeta;
 }
+
+export interface CollectionResponse<T> {
+  data: T[];
+}

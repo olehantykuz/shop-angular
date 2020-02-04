@@ -9,7 +9,7 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-detail-item.component.scss']
 })
 export class CartDetailItemComponent implements OnInit {
-  @Input() product: CartItem;
+  @Input() item: CartItem;
   @Input() index: number;
   removedQuantity = 1;
 
@@ -22,15 +22,15 @@ export class CartDetailItemComponent implements OnInit {
   }
 
   formattedPrice() {
-    return this.currencyService.getFormattedPrice(this.product.item.price);
+    return this.currencyService.getFormattedPrice(this.item.product.price);
   }
 
   get productTotalPrice() {
-    return (+this.formattedPrice() * this.product.quantity).toFixed(2);
+    return (+this.formattedPrice() * this.item.quantity).toFixed(2);
   }
 
   removeProduct() {
-    this.cartService.removeItem(this.product.item.id, this.removedQuantity);
+    this.cartService.removeItem(this.item.product, this.removedQuantity);
   }
 
 }

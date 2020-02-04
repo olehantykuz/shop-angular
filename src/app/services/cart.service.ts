@@ -65,6 +65,12 @@ export class CartService {
     this.refreshCart();
   }
 
+  clearCart() {
+    this.cart = {};
+    this.items = [];
+    this.refreshCart();
+  }
+
   findById(id: number) {
     return this.items.find(element => {
       return element.product.id === id;

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 
 import { serverErrorHandle } from '../core/helpers/error-hadle';
-import {LoginData, RegisterData, User} from '../core/types/models/user';
+import { LoginData, RegisterData, User } from '../core/types/models/user';
 import { AuthResponse } from '../core/types/requests/auth-response';
 import { environment } from '../../environments/environment';
 

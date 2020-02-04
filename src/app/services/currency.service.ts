@@ -4,7 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 import { serverErrorHandle } from '../core/helpers/error-hadle';
 import { environment } from '../../environments/environment';
-import {Currency} from '../core/types/models/currency';
+import { Currency } from '../core/types/models/currency';
 
 @Injectable({
   providedIn: 'root'

@@ -32,7 +32,7 @@ export class HeadingComponent implements OnInit {
   }
 
   get getTotalCartItemsNumber() {
-    return this.cartService.items.length;
+    return Object.keys(this.cartService.cart).length;
   }
 
 }

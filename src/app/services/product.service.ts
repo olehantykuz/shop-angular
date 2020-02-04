@@ -3,10 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 
 import { serverErrorHandle } from '../core/helpers/error-hadle';
-import { PaginationResponse } from '../core/types/requests/pagination-response';
+import { IPaginationLinks, IPaginationMeta, PaginationResponse } from '../core/types/requests/collection-response';
 import { Product } from '../core/types/models/product';
 import { environment } from '../../environments/environment';
-import { IPaginationLinks, IPaginationMeta } from '../core/types/requests/pagination-response';
 
 @Injectable({
   providedIn: 'root'

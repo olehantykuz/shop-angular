@@ -5,7 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { CartItem } from '../core/types/models/cart';
 import { Product } from '../core/types/models/product';
-import { CollectionResponse } from '../core/types/requests/pagination-response';
+import { CollectionResponse } from '../core/types/requests/collection-response';
 import { serverErrorHandle } from '../core/helpers/error-hadle';
 
 @Injectable({

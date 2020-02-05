@@ -14,6 +14,8 @@ import { CurrencyListComponent } from './components/currency-list/currency-list.
 import { CurrencyListItemComponent } from './components/currency-list-item/currency-list-item.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CartDetailComponent } from './components/cart-detail/cart-detail.component';
+import { CartDetailItemComponent } from './components/cart-detail-item/cart-detail-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { RegisterComponent } from './components/register/register.component';
     CurrencyListComponent,
     CurrencyListItemComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CartDetailComponent,
+    CartDetailItemComponent
   ],
   imports: [
     BrowserModule,

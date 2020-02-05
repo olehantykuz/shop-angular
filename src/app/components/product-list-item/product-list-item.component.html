@@ -2,4 +2,16 @@
 <td>{{ product.category.name }}</td>
 <td>{{ product.name | uppercase }}</td>
 <td>{{ getFormattedPrice() }}</td>
-<td></td>
+<td>
+  <input
+    class="count-input"
+    type="number"
+    min="1"
+    [(ngModel)]="quantity"
+  />
+  <button
+    (click)="addToCart()"
+  >
+    Add to cart
+  </button>
+</td>

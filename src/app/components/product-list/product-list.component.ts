@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService} from '../../services/product.service';
+import { ProductService } from '../../services/product.service';
 import { CurrencyService } from '../../services/currency.service';
-import { IPaginationLinks, IPaginationMeta } from '../../core/types/requests/pagination-response';
+import { IPaginationLinks, IPaginationMeta } from '../../core/types/requests/collection-response';
 
 @Component({
   selector: 'app-product-list',

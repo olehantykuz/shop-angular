@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 
-import {LoginData, RegisterData, User} from '../core/types/models/user';
+import { serverErrorHandle } from '../core/helpers/error-hadle';
+import { LoginData, RegisterData, User } from '../core/types/models/user';
 import { AuthResponse } from '../core/types/requests/auth-response';
 import { environment } from '../../environments/environment';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ export class UserService {
       tap(response => {
         this.authorise(response);
       }),
-      catchError(this.handleError<AuthResponse>())
+      catchError(serverErrorHandle<AuthResponse>())
     );
   }
 
@@ -57,17 +58,21 @@ export class UserService {
       tap(response => {
         this.authorise(response);
       }),
-      catchError(this.handleError<AuthResponse>())
+      catchError(serverErrorHandle<AuthResponse>())
     );
   }
 
   logout() {
     const url = this.baseAuthUrl + '/logout';
     const headers = this.authHeader();
-    window.localStorage.removeItem('authToken');
-    this.user = this.token = null;
+    this.localLogout();
 
     return this.http.post(url, null, headers);
+  }
+
+  private localLogout() {
+    window.localStorage.removeItem('authToken');
+    this.user = this.token = null;
   }
 
   getUser() {
@@ -77,16 +82,15 @@ export class UserService {
       tap(response => {
         this.user = response;
       }),
-      catchError(this.handleError<User>())
+      catchError((error: any): Observable<User> => {
+          if (error.status === 401) {
+            this.localLogout();
+          }
+          console.error(error);
+
+          return of({} as User);
+      })
     ).subscribe();
-  }
-
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-      console.error('error', error);
-
-      return of(result as T);
-    };
   }
 
   private authorise(response) {

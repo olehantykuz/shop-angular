@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-heading',
@@ -12,6 +13,7 @@ export class HeadingComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private cartService: CartService,
     private router: Router
   ) { }
 
@@ -27,6 +29,10 @@ export class HeadingComponent implements OnInit {
     this.userService.logout().subscribe(response => {
       this.router.navigate(['login']);
     });
+  }
+
+  get getTotalCartItemsNumber() {
+    return Object.keys(this.cartService.cart).length;
   }
 
 }

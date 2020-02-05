@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 
+import { serverErrorHandle } from '../core/helpers/error-hadle';
 import { environment } from '../../environments/environment';
-import {Currency} from '../core/types/models/currency';
+import { Currency } from '../core/types/models/currency';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class CurrencyService {
         tap(response => {
           this.currencies = response;
         }),
-        catchError(this.handleError<Currency[]>([]))
+        catchError(serverErrorHandle<Currency[]>([]))
       );
   }
 
@@ -44,12 +44,8 @@ export class CurrencyService {
     return value * this.getConversionRate();
   }
 
-  private handleError<T>(result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-
-      return of(result as T);
-    };
+  getFormattedPrice(basePrice: number) {
+    return (this.getConvertedValue(basePrice) / 100).toFixed(2);
   }
 
 }

@@ -6,6 +6,7 @@ import { serverErrorHandle } from '../core/helpers/error-hadle';
 import { LoginData, RegisterData, User } from '../core/types/models/user';
 import { AuthResponse } from '../core/types/requests/auth-response';
 import { environment } from '../../environments/environment';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -64,10 +65,14 @@ export class UserService {
   logout() {
     const url = this.baseAuthUrl + '/logout';
     const headers = this.authHeader();
-    window.localStorage.removeItem('authToken');
-    this.user = this.token = null;
+    this.localLogout();
 
     return this.http.post(url, null, headers);
+  }
+
+  private localLogout() {
+    window.localStorage.removeItem('authToken');
+    this.user = this.token = null;
   }
 
   getUser() {
@@ -77,7 +82,14 @@ export class UserService {
       tap(response => {
         this.user = response;
       }),
-      catchError(serverErrorHandle<User>())
+      catchError((error: any): Observable<User> => {
+          if (error.status === 401) {
+            this.localLogout();
+          }
+          console.error(error);
+
+          return of({} as User);
+      })
     ).subscribe();
   }
 

@@ -89,18 +89,15 @@ export class CartService {
   fetchCartItems() {
     const key = 'ids';
     const ids = Object.keys(this.cart);
+    const url = this.apiUrl + '?' + key + '[]=' + ids.join('&' + key + '[]=');
 
-    if (ids.length > 0) {
-      const url = this.apiUrl + '?' + key + '[]=' + ids.join('&' + key + '[]=');
-
-      return this.http.get<CollectionResponse<Product>>(url)
-        .pipe(
-          tap(response => {
-            this.setCartItems(response.data);
-          }),
-          catchError(serverErrorHandle<CollectionResponse<Product>>({data: []}))
-        );
-    }
+    return this.http.get<CollectionResponse<Product>>(url)
+      .pipe(
+        tap(response => {
+          this.setCartItems(response.data);
+        }),
+        catchError(serverErrorHandle<CollectionResponse<Product>>({data: []}))
+      );
   }
 
   private setCartItems(dataFromServer: Product[]) {

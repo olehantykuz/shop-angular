@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { LoginData } from '../../core/types/models/user';
@@ -10,40 +10,31 @@ import { LoginData } from '../../core/types/models/user';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  submitted = false;
+  form: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', LoginData.rules.email],
-      password: ['', LoginData.rules.password]
+    this.form = new FormGroup({
+        email: new FormControl('', LoginData.rules.email),
+        password: new FormControl('', LoginData.rules.password)
     });
-  }
-
-  get form() {
-    return this.loginForm.controls;
   }
 
   login(e) {
     e.preventDefault();
-    this.submitted = true;
-
-    if (this.loginForm.invalid) {
+    if (this.form.invalid) {
       return;
     }
 
-    const data = this.loginForm.value as LoginData;
+    const data = this.form.value as LoginData;
     this.userService.login(data)
       .subscribe(response => {
         if (response) {
-          this.loginForm.reset();
-          this.submitted = false;
+          this.form.reset();
           this.router.navigate(['/']);
         } else {
           alert('Invalid email or password');

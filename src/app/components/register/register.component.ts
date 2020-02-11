@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { RegisterData } from '../../core/types/models/user';
@@ -10,41 +10,37 @@ import { RegisterData } from '../../core/types/models/user';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
-  submitted = false;
+  form: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.registerForm = this.formBuilder.group({
-      email: ['', RegisterData.rules.email],
-      password: ['', RegisterData.rules.password],
-      name: ['', RegisterData.rules.name]
-    });
-  }
-
-  get form() {
-    return this.registerForm.controls;
+    this.form = new FormGroup(
+      {
+        email: new FormControl('', RegisterData.rules.email),
+        password: new FormControl('', RegisterData.rules.password),
+        name: new FormControl('', RegisterData.rules.name)
+      }
+    );
   }
 
   register(e) {
     e.preventDefault();
-    this.submitted = true;
 
-    if (this.registerForm.invalid) {
+    console.log(this.form, this.form.invalid)
+
+    if (this.form.invalid) {
       return;
     }
 
-    const data = this.registerForm.value as RegisterData;
+    const data = this.form.value as RegisterData;
     this.userService.register(data)
       .subscribe(response => {
         if (response) {
-          this.registerForm.reset();
-          this.submitted = false;
+          this.form.reset();
           this.router.navigate(['/']);
         } else {
           alert('Something went wrong');

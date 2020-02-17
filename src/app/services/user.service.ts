@@ -6,7 +6,6 @@ import { serverErrorHandle } from '../core/helpers/error-hadle';
 import { LoginData, RegisterData, User } from '../core/types/models/user';
 import { AuthResponse } from '../core/types/requests/auth-response';
 import { environment } from '../../environments/environment';
-import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -71,27 +70,13 @@ export class UserService {
   getUser() {
     const url = this.baseAuthUrl + '/me';
 
-    return this.http.get<User>(url, this.authHeader()).pipe(
-      tap(response => {
-        this.user = response;
-      }),
-      catchError((error: any): Observable<User> => {
-          if (error.status === 401) {
-            this.logout();
-          }
-          console.error(error);
-
-          return of({} as User);
-      })
+    return this.http.get<User>(url)
+      .pipe(
+        tap(response => {
+          this.user = response;
+        }),
+        catchError(serverErrorHandle<User>())
     );
-  }
-
-  private authHeader() {
-    const header = this.token ? { Authorization: 'Bearer ' + JSON.parse(window.localStorage.getItem('authToken')) } : {};
-
-    return {
-      headers: new HttpHeaders(header)
-    };
   }
 
   private authorise(data) {

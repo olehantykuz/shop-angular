@@ -26,8 +26,8 @@
           </a>
         </div>
       </div>
-      <div *ngIf="account()" class="d-flex align-items-center justify-content-center list-group-item ml-1">
-        <span>{{ user.email }}</span>
+      <div *ngIf="userService.user" class="d-flex align-items-center justify-content-center list-group-item ml-1">
+        <span>{{ userService.user.email }}</span>
       </div>
       <app-currency-list class="ml-2"></app-currency-list>
     </div>

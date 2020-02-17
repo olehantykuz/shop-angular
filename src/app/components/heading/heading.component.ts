@@ -9,10 +9,8 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./heading.component.scss']
 })
 export class HeadingComponent implements OnInit {
-  user = this.userService.getAccount();
-
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private cartService: CartService,
     private router: Router
   ) { }
@@ -20,15 +18,10 @@ export class HeadingComponent implements OnInit {
   ngOnInit() {
   }
 
-  account() {
-    return this.user = this.userService.user;
-  }
-
   logout(e) {
     e.preventDefault();
-    this.userService.logout().subscribe(response => {
-      this.router.navigate(['login']);
-    });
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 
   get getTotalCartItemsNumber() {

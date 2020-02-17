@@ -6,7 +6,7 @@ import { UserService } from './services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Super shop';
 
   constructor(
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     if (this.userService.token) {
-      this.userService.getUser();
+      this.userService.getUser().subscribe();
     }
   }
 

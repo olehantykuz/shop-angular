@@ -12,7 +12,6 @@ import {Observable, of} from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  token = JSON.parse(window.localStorage.getItem('authToken'));
   baseAuthUrl = environment.baseUrl + '/auth';
   user: User | null;
 
@@ -24,20 +23,21 @@ export class UserService {
     private http: HttpClient
   ) { }
 
+  get token(): string {
+    const expiration = localStorage.getItem('authTokenExpires');
+    const expDate = !!expiration ? new Date(expiration) : new Date(+expiration);
+
+    if (!expiration && new Date() > expDate) {
+      this.logout();
+
+      return null;
+    }
+
+    return localStorage.getItem('authToken');
+  }
+
   isLoggedIn() {
-    return Boolean(this.token);
-  }
-
-  authHeader() {
-    const header = this.token ? { Authorization: 'Bearer ' + JSON.parse(window.localStorage.getItem('authToken')) } : {};
-
-    return {
-      headers: new HttpHeaders(header)
-    };
-  }
-
-  getAccount() {
-    return this.user;
+    return !!this.token;
   }
 
   login(data: LoginData) {
@@ -63,16 +63,9 @@ export class UserService {
   }
 
   logout() {
-    const url = this.baseAuthUrl + '/logout';
-    const headers = this.authHeader();
-    this.localLogout();
-
-    return this.http.post(url, null, headers);
-  }
-
-  private localLogout() {
     window.localStorage.removeItem('authToken');
-    this.user = this.token = null;
+    window.localStorage.removeItem('authTokenExpires');
+    this.user = null;
   }
 
   getUser() {
@@ -84,19 +77,28 @@ export class UserService {
       }),
       catchError((error: any): Observable<User> => {
           if (error.status === 401) {
-            this.localLogout();
+            this.logout();
           }
           console.error(error);
 
           return of({} as User);
       })
-    ).subscribe();
+    );
   }
 
-  private authorise(response) {
-    this.token = response.access_token;
-    this.user = response.user;
-    window.localStorage.setItem('authToken', JSON.stringify(this.token));
+  private authHeader() {
+    const header = this.token ? { Authorization: 'Bearer ' + JSON.parse(window.localStorage.getItem('authToken')) } : {};
+
+    return {
+      headers: new HttpHeaders(header)
+    };
+  }
+
+  private authorise(data) {
+    const expDate = +data.expires_in ? new Date(new Date().getTime() + +data.expires_in * 1000) : 0;
+    window.localStorage.setItem('authToken', JSON.stringify(data.access_token));
+    window.localStorage.setItem('authTokenExpires', expDate.toString());
+    this.user = data.user;
   }
 
 }

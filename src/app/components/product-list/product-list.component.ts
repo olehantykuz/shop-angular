@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CurrencyService } from '../../services/currency.service';
 import { IPaginationLinks, IPaginationMeta } from '../../core/types/requests/collection-response';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   products = [];
   paginationLinks: IPaginationLinks;
   paginationMeta: IPaginationMeta;
+  subscription: Subscription;
 
   constructor(
     private productService: ProductService,
@@ -29,7 +31,7 @@ export class ProductListComponent implements OnInit {
   }
 
   fetchProducts(url = null) {
-    this.productService.getProducts(url)
+    this.subscription = this.productService.getProducts(url)
       .subscribe(response => {
         this.products = response.data;
         this.paginationLinks = response.links;
@@ -40,6 +42,12 @@ export class ProductListComponent implements OnInit {
   getProducts(e, url = null) {
     e.preventDefault();
     this.fetchProducts(url);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

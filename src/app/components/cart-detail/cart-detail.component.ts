@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CurrencyService } from '../../services/currency.service';
 import { CartService } from '../../services/cart.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-cart-detail',
   templateUrl: './cart-detail.component.html',
   styleUrls: ['./cart-detail.component.scss']
 })
-export class CartDetailComponent implements OnInit {
+export class CartDetailComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
 
   constructor(
     private currencyService: CurrencyService,
@@ -15,7 +17,7 @@ export class CartDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cartService.fetchCartItems().subscribe();
+    this.subscription = this.cartService.fetchCartItems().subscribe();
   }
 
   get selectedCurrencyName() {
@@ -34,6 +36,12 @@ export class CartDetailComponent implements OnInit {
 
   clear() {
     this.cartService.clearCart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

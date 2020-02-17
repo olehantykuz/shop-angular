@@ -24,7 +24,7 @@ export class HeadingComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  get getTotalCartItemsNumber() {
+  get totalCartItemsNumber() {
     return Object.keys(this.cartService.cart).length;
   }
 
